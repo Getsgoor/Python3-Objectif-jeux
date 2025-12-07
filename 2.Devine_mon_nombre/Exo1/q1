@@ -1,0 +1,10 @@
+entree = "input"
+compteur = 1
+
+while (entree != "") :
+    entree = input("Tapez un mot (ou juste 'Enter' pour quitter) ")
+    if (entree != "") :
+        print(f"{compteur} {entree}")
+        compteur += 1
+                
+print("Au revoir")

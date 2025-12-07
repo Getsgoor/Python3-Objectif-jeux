@@ -1,0 +1,14 @@
+from random import randint
+
+liste1 = []
+for i in range(15):
+    liste1.append(randint(1,10))
+
+liste2 = []
+for i in liste1:
+    if (i not in liste2):
+        liste2.append(i)
+
+liste2.sort()
+print(liste1)
+print(liste2)

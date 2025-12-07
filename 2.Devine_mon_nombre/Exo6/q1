@@ -1,0 +1,44 @@
+from random import randint
+from time import time
+
+
+nMax = int(input("nombre maximum ? "))
+print()
+nbErreurs = 0
+temps = time()
+
+for i in range(10) :
+    operation = randint(1,4)
+    a = randint(1, nMax)
+    b = randint(1,nMax)
+    operateur = ""
+    bonneReponse = False
+    resultat = 0
+    
+    if (operation == 1) :
+        operateur = "+"
+        resultat = a + b
+    elif (operation == 2) :
+        operateur = "-"
+        resultat = a - b
+    elif (operation == 3) :
+        operateur = "x"
+        resultat = a * b
+    else :
+        operateur = "/"
+        resultat = a // b
+    
+    while (not bonneReponse) :
+        reponse = int(input(f"{a} {operateur} {b} = "))
+        bonneReponse = reponse == resultat
+        if (not bonneReponse) :
+            print("Faux ! Réessayez !")
+            nbErreurs += 1
+print()
+
+print("chrono: {:2f}".format(time()-temps), "secondes") 
+if (nbErreurs <= 1) :
+    print(nbErreurs, "erreur")
+else :
+    print(nbErreurs, "erreurs")
+      

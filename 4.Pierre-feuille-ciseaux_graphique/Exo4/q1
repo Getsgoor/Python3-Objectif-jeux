@@ -1,0 +1,29 @@
+#frise tkinter d'une partie de ierre papier ciseaux
+
+from tkinter import *
+from random import randint
+
+def choisi_image():
+    images = [pierre, papier, ciseaux]
+    choix = randint(0,2)
+    return images[choix]
+
+
+fenetre = Tk()
+fenetre.title("Pierre, papier, ciseaux")
+
+pierre = PhotoImage(file = "pierre-petit.gif")
+papier = PhotoImage(file = "papier-petit.gif")
+ciseaux = PhotoImage(file = "ciseaux-petit.gif")
+
+for i in range(10):
+    image1 = choisi_image()
+    image2 = choisi_image()
+    
+    joueur1 = Label(fenetre, image = image1)
+    joueur1.grid(row = 0, column = i)
+    
+    joueur2 = Label(fenetre, image = image2)
+    joueur2.grid(row = 1, column = i)
+
+fenetre.mainloop()

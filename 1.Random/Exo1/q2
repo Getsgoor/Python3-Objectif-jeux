@@ -1,0 +1,5 @@
+from random import randint
+
+for i in range(50) :
+    print(randint(1,6) + randint(1,6) + randint(1,6), end = " ")
+print()

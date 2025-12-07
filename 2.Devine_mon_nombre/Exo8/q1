@@ -1,0 +1,46 @@
+from random import random
+
+n = int(input("Entrez le nombre de paquet que vous voulez tirer. "))
+i = 0
+communes = 0
+rares = 0
+epiques = 0
+legendaires = 0
+
+while (i < n) :
+	estValide = False
+	estLegendaire = False
+	for j in range(5) :
+		rand = random() 
+		if (rand < 0.01) :
+			print('L', end = " ")
+			estValide = True
+			estLegendaire = True
+			legendaires += 1
+		elif (rand < 0.05) :
+			print('E', end = " ")
+			estValide = True
+			epiques += 1
+		elif (rand < 0.28) :
+			print('R', end = " ")
+			estValide = True
+			rares += 1
+		else :
+			print('C', end = " ")
+			communes += 1
+
+	if (not estValide) :
+		print("non valide", end = "")
+		communes -= 5
+		i -= 1
+  
+	if (estLegendaire) :
+		print("!", end = "")
+	print()
+	i += 1
+  
+print()
+print(legendaires, "légendaire(s):", "{:.2f} %".format(100 * legendaires / (5 * n)))
+print(epiques, "épiques(s):", "{:.2f} %".format(100 * epiques / (5 * n)))
+print(rares, "rare(s):", "{:.2f} %".format(100 * rares / (5 * n)))
+print(communes, "communes:", "{:.2f} %".format(100 * communes / (5 * n)))

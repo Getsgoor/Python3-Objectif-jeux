@@ -1,0 +1,173 @@
+#jeu pierre feuille ciseaux avec tkinter
+
+from tkinter import *
+from random import random
+
+score_joueur = 0
+score_ordi = 0
+compteur_coups = 0
+
+
+def init_historique():
+    for i in range(1, 21):
+		
+        hist_joueur = Label(historique, image = rien_petit)
+        hist_joueur.grid(row = 0, column = i)
+		
+        hist_ordi = Label(historique, image = rien_petit)
+        hist_ordi.grid(row = 1, column = i)
+
+
+def config_image(nombre_joueur, nombre_ordi):
+    image = [pierre, papier, ciseaux]
+    image_petit = [pierre_petit, papier_petit, ciseaux_petit]
+    
+    objet = image[nombre_joueur - 1]
+    objet_petit = image_petit[nombre_joueur-1]
+    lab1.configure(image = objet)
+    hist_joueur = Label(historique, image = objet_petit)
+    hist_joueur.grid(row = 0, column = compteur_coups)
+    
+    objet = image[nombre_ordi - 1]
+    objet_petit = image_petit[nombre_ordi-1]
+    lab3.configure(image = objet)
+    hist_ordi = Label(historique, image = objet_petit)
+    hist_ordi.grid(row = 1, column = compteur_coups)
+    
+    
+    return objet, objet_petit
+
+    
+
+def augmenter_score(coup_joueur, coup_ordi, score_joueur, score_ordi):
+    new_scoreJ = score_joueur
+    new_scoreO = score_ordi
+    if (coup_joueur == coup_ordi):
+        return new_scoreJ, new_scoreO
+    if (coup_joueur == 1 and coup_ordi == 2):
+        new_scoreO += 1
+    elif (coup_joueur == 2 and coup_ordi == 3):
+        new_scoreO += 1
+    elif (coup_joueur == 3 and coup_ordi == 1):
+        new_scoreO += 1
+    else:
+        new_scoreJ +=1
+    
+    return new_scoreJ, new_scoreO
+    
+
+def choisir_coup_ordi():
+    nombre = random()
+    if (nombre< 0.29):
+        return 1
+    if (nombre < 0.59):
+        return 3
+    return 2
+
+
+def jouer(coup_joueur):
+    global score_joueur, score_ordi, compteur_coups
+    compteur_coups += 1
+    if (compteur_coups > 20):
+        compteur_coups = 1
+    coup_ordi = choisir_coup_ordi()
+    
+    score_joueur, score_ordi = augmenter_score(coup_joueur, coup_ordi, score_joueur, score_ordi)
+    score1.configure(text = str(score_joueur))
+    score2.configure(text = str(score_ordi))
+    config_image(coup_joueur, coup_ordi)
+ 
+
+def jouer_pierre():
+    jouer(1)
+    lab1.configure(image = pierre)
+    
+def jouer_papier():
+    jouer(2)
+    
+def jouer_ciseaux():
+    jouer(3)
+    
+def reinit():
+    global score_joueur, score_ordi, compteur_coups
+    compteur_coups = 0
+    score_joueur = 0
+    score_ordi = 0
+    score1.configure(text = "0")
+    score2.configure(text = "0")
+    lab1.configure(image = rien)
+    lab3.configure(image = rien)
+    init_historique()
+
+
+#fenetre graphique
+fenetre = Tk()
+fenetre.title("Pierre, papier, ciseaux")
+historique = Toplevel()
+historique.title("Historique")
+
+
+#images
+rien = PhotoImage(file = "rien.gif")
+pierre = PhotoImage(file = "pierre.gif")
+papier = PhotoImage(file = "papier.gif")
+ciseaux = PhotoImage(file = "ciseaux.gif")
+versus = PhotoImage(file = "versus.gif")
+pierre_petit = PhotoImage(file = "pierre-petit.gif")
+papier_petit = PhotoImage(file = "papier-petit.gif")
+ciseaux_petit = PhotoImage(file = "ciseaux-petit.gif")
+rien_petit = PhotoImage(file = "rien-petit.gif")
+
+
+#label
+texte1 = Label(fenetre, text = "Humain :", font = ("Helvetica", 16))
+texte1.grid(row = 0, column = 0)
+texte_1H = Label(historique, text = "Joueur : ", font = ("Helvetica", 16))
+texte_1H.grid(row = 0, column = 0, sticky = W)
+    
+    
+texte2 = Label(fenetre, text = "Machine :", font = ("Helvetica", 16))
+texte2.grid(row = 0, column = 2)
+texte_2H = Label(historique, text = "Ordinateur : ", font = ("Helvetica", 16))
+texte_2H.grid(row = 1, column = 0, sticky = W)
+
+texte3 = Label(fenetre, text = "Pour jouer, cliquez sur une des icones ci dessous.")
+texte3.grid(row = 3, columnspan = 3, pady = 5)
+
+score1 = Label(fenetre, text = "0", font = ("Hevetica", 16))
+score1.grid(row = 1, column = 0)
+
+score2 = Label(fenetre, text = "0", font = ("Hevetica", 16))
+score2.grid(row = 1, column = 2)
+
+lab1 = Label(fenetre, image = rien)
+lab1.grid(row = 2, column = 0)
+
+lab2 = Label(fenetre, image = versus)
+lab2.grid(row = 2, column = 1)
+
+lab3 = Label(fenetre, image = rien)
+lab3.grid(row = 2, column = 2)
+
+#boutons
+bouton1 = Button(fenetre, command = jouer_pierre)
+bouton1.configure(image = pierre)
+bouton1.grid(row = 4, column = 0)
+
+bouton2 = Button(fenetre, command = jouer_papier)
+bouton2.config(image = papier)
+bouton2.grid(row = 4, column = 1)
+
+bouton3 = Button(fenetre, command = jouer_ciseaux)
+bouton3.configure(image = ciseaux)
+bouton3.grid(row = 4, column = 2)
+
+bouton4 = Button(fenetre,text='Recommencer',command=reinit)
+bouton4.grid(row = 5, column = 0, pady = 10, sticky = E)
+
+bouton5 = Button(fenetre,text='Quitter',command=fenetre.destroy)
+bouton5.grid(row = 5, column = 2, pady = 10, sticky = W)
+
+#demarrage
+init_historique()
+fenetre.mainloop()

@@ -1,0 +1,38 @@
+from random import randint
+
+nbMax = 30
+joueur = input("Quel est votre nom ? ")
+jouer = "o"
+nbParties = 0
+nbVictoires = 0
+nbMoyenTentatives = 0
+
+while (jouer == "o") :
+	nbJoueur = 0
+	nbOrdi = randint(1, nbMax)
+	nbTentatives = 1
+
+	print("J'ai choisi un nombre entre 1 et 30\nA vous de deviner en 5 tentatives au maximum !")
+	while (nbJoueur != nbOrdi  and  nbTentatives <= 5) :
+		print("Essai no", nbTentatives)
+		nbJoueur = int(input("Votre proposition : "))
+		if (nbJoueur < nbOrdi) :
+			print("Trop petit")
+		elif (nbJoueur > nbOrdi) :
+			print("Trop grand")
+		else :
+			print("Bravo", joueur, "! Vous avez trouvé", nbOrdi, "en", nbTentatives, "essai(s)")
+			nbVictoires += 1
+			nbMoyenTentatives += nbTentatives
+			
+			nbTentatives = 0
+		nbTentatives += 1
+		
+	if (nbTentatives > 5) :
+		print("Désolé, vous avez utilisé vos 5 essais en vain.\nJ'avais choisi le nombre", nbOrdi)
+
+	nbParties += 1
+	jouer = input("Voulez-vous rejouer (o/n) ? ")
+
+print("Pourcentage de réussites: {:.1f}".format(100*nbVictoires/nbParties), "%")
+print("Nombre moyen de tentatives: {:.1f}".format(nbMoyenTentatives/nbVictoires)) 

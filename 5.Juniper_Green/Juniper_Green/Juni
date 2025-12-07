@@ -1,0 +1,175 @@
+#Jeu de Juniper Green
+# Le jeu possède 4 règles :
+
+# 1. Le Joueur 1 choisit un nombre entre 1 et nMax
+# 2. A tour de rôle, chaque joueur doit choisir un nombre parmi les multiples
+#    ou les diviseurs du nombre choisi précédemment par son adversaire
+#    et inférieur à  nMax.
+# 3. Un nombre ne peut être joué qu'une seule fois.
+# 4. Le premier nombre choisi doit être pair.
+
+# Le perdant est le joueur qui ne trouve plus de multiples ou de diviseurs
+# communs au nombre précédemment choisi.
+
+from random import randint, choice, random
+from math import *
+
+#------------------------------- Tests de saisie --------------------------------------
+
+def test_entier(phrase):
+    saisie = 0
+    while True:
+        try:
+            saisie = int(input(phrase))
+            return saisie
+        except ValueError:
+            print("Erreur, veuillez entrer un nombre")
+
+
+def saisie_joueur():
+    saisie = 0
+    phrase = "Que jouez-vous ? "
+    while True:
+        saisie = test_entier(phrase)
+        if (saisie in valides):
+            return saisie
+        print("Le nombre choisi ne fait pas parti de la liste des nombres valides. Veuillez en choisir un autre")
+        print(valides)
+
+
+def demander_nbMax():
+    saisie = 0
+    phrase = "Entrez le nombre maximum : "
+    while True:
+        saisie = test_entier(phrase)
+        if (saisie > 9):
+            return saisie
+        print("Choisissez un nombre supérieur ou égal à 10 pour pouvoir jouer")
+        
+
+def demander_qui_commence():
+    saisie = 0
+    phrase = "Qui commence ?\n1) Le joueur\n2)L'ordinateur "
+    while True:
+        saisie = test_entier(phrase)
+        if(saisie == 1):
+           return True
+        if(saisie == 2):
+           return False
+        else:
+             print("Choisissez qui commence en tapant 1 ou 2 ")
+
+
+#-------------------------------- Tours de jeu ------------------------------------------
+
+def tour(joueur):
+    choix = 0
+    if(joueur):
+        choix = saisie_joueur()
+    else:
+        choix = tour_ordi()
+        print("Je joue", choix)
+    return choix
+
+
+def tour_ordi():
+
+    if (random() > 0.5) and (len(valides) > 1):
+        return choice(valides[1:])
+    for i in nombres_premiers:
+        if i in valides:
+            return i
+    
+    if (len(valides) > 1):
+        return valides[1]
+    return valides[0]
+    
+
+
+def premier_tour(joueur):
+    global valides
+    valides = multiple(2)
+    print("\nLe premier nombre choisi doit être pair !")
+    print("Nombres valides: ", valides)
+    if (not joueur):
+        print("J'ai choisi mon premier coup.")
+    choix = tour(joueur)
+    return choix
+
+
+def debut():
+    v = []
+    tour_du_joueur = demander_qui_commence()
+    choix = premier_tour(tour_du_joueur)
+    v = update_liste(choix)
+    tour_du_joueur = not tour_du_joueur
+    
+    return choix, v, tour_du_joueur
+
+
+#------------------------------------ Autres fonctions ------------------------------------
+
+
+
+def crible_eratosthene(n) :
+    liste = [True] * (n + 1)
+    liste[0] = liste[1] = False
+    for i in range(2, int(sqrt(n)) + 1) :
+        if (liste[i]):
+            for j in range(2 * i, n + 1, i):
+                liste[j] = False
+                
+    premiers = [2]
+    for i in range(3, n+1, 2):
+        if (liste[i]):
+            premiers.append(i)
+    return premiers
+
+
+
+def diviseur(nombre):
+    v = []
+    for i in range(1, nombre):
+        if (nombre % i == 0 and i in possibles):
+            v.append(i)
+    return v
+
+
+def multiple(nombre):
+    v = []
+    i = nombre
+    while (i <= nMax ):
+        if (i in possibles):
+            v.append(i)
+        i += nombre
+    return v
+
+
+def update_liste(nombre):
+    possibles.remove(nombre)
+    nValides = diviseur(nombre) + multiple(nombre)
+
+    return nValides
+    
+
+#---------------------------------- Programme principal --------------------------------------
+
+
+nMax = demander_nbMax()
+print("Très bien, jouons avec des nombres entre 1 et", nMax)
+possibles = list(range(1, int(nMax) + 1))		 #liste des nombres pas encore utilisés
+valides = possibles[:]
+nombres_premiers = crible_eratosthene(nMax)[::-1]
+
+choix, valides, tour_du_joueur = debut()
+while (valides):
+    print("Nombres valides: ", valides)
+    choix = tour(tour_du_joueur)
+    valides = update_liste(choix)
+    tour_du_joueur = not tour_du_joueur
+
+if (not tour_du_joueur):
+    print("Bravo!")
+else:
+    print("Vous avez perdu!")
+    

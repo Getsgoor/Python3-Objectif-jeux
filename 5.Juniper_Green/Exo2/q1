@@ -1,0 +1,13 @@
+liste1 = [31,28,31,30,31,30,31,31,30,31,30,31]
+liste2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août',
+'Septembre','Octobre','Novembre','Décembre']
+
+elt = 0
+for i in range(12):
+    elt = (i * 2) + 1
+    liste2[elt:elt] = [liste1[i]] 
+
+indice = liste2.index(28) + 1
+liste2[indice:indice] = [29]
+
+print(0.1 + 0.2 == 0.3)

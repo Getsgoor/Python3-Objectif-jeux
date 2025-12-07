@@ -1,0 +1,6 @@
+from random import sample
+
+numeros = list(range(1,51))
+etoile = list(range(1,13))
+
+print(sample(numeros,5) + sample(etoile,2))

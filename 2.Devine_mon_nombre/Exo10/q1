@@ -1,0 +1,38 @@
+from random import randint
+
+nbTentatives = 1
+rep = 3 
+borneInf = 1
+borneSup = 30
+
+print("Choisissez un nombre entre", borneInf, "et", borneSup)
+print("J'essai de le deviner en 5 tentatives au maximum !")
+input("Entrez 'Enter' pour commencer")
+
+while (rep > 0  and  nbTentatives <= 5) :
+    print("Essai no", nbTentatives)
+    if (nbTentatives == 1) :
+        nbOrdi = randint(1,30)
+    else :
+        nbOrdi = (borneInf+borneSup)//2
+    print("Je propose", nbOrdi)
+    while (True) :
+        try:
+            rep = int(input("Egal (0), trop grand (1) ou trop petit (2) ? "))
+            break
+        except ValueError:
+            print("Réponse non valide. Réessayez !")  
+    
+    if (rep == 1) :
+        borneSup = nbOrdi - 1
+    elif (rep == 2) :
+        borneInf = nbOrdi + 1
+    elif rep==0:
+        print("J'ai trouvé",nbOrdi,"en", nbTentatives, "essai(s)")
+    else :
+        print("Je ne comprends pas votre rÃ©ponse...")
+        nbTentatives-= 1
+    nbTentatives += 1
+
+if nbTentatives>5 and rep>0 :
+    print("Zut, j'ai utilisé mes 5 essais en vain.")

@@ -1,0 +1,21 @@
+from random import random
+
+estValide = False
+for i in range(5) :
+    rand = random() 
+    if (rand < 0.01) :
+        print('L', end = " ")
+        estValide = True
+    elif (rand < 0.05) :
+        print('E', end = " ")
+        estValide = True
+    elif (rand < 0.28) :
+        print('R', end = " ")
+        estValide = True
+    else :
+        print('C', end = " ")
+print()
+
+if (not estValide) :
+    print("Paquet non valide")
+    

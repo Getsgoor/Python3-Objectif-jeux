@@ -1,0 +1,4 @@
+from random import sample
+
+numeros = list(range(1,91))
+print(sample(numeros, 90))

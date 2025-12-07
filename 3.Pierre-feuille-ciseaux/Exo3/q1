@@ -1,0 +1,11 @@
+#! /usr/bin/env python3
+# -*- coding:Utf8 -*-
+
+def celsiusToFarenheit(cel) :
+    return (9/5) * cel + 32
+
+def farenheitToCelsius(far) :
+    return (5/9) * (far - 32)
+
+print(celsiusToFarenheit(35))
+print(farenheitToCelsius(60))

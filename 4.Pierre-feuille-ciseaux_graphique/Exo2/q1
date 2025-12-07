@@ -1,0 +1,38 @@
+#fenetre tkinter d'un bouton incrémenteur
+
+from tkinter import *
+
+
+def incrementer():
+    global compteur
+    compteur += 1
+    compte.configure(text = str(compteur))
+
+def reinit():
+    global compteur
+    compteur = 0
+    compte.configure(text = "0")
+
+compteur = 0
+
+
+#Tkinter
+fenetre = Tk()
+fenetre.title("Bouton incrémenteur")
+
+
+compte = Label(fenetre, text = "0", font = ("Helvetica", 48))
+compte.grid(rowspan = 3, column = 0)
+
+#Boutons
+
+bouton1 = Button(fenetre, text = "Incrementer", command = incrementer)
+bouton1.grid(row = 0, column = 1)
+
+bouton2 = Button(fenetre, text = "Recommencer", command = reinit)
+bouton2.grid(row = 1, column = 1)
+
+bouton3 = Button(fenetre, text = "Quitter", command = fenetre.destroy)
+bouton3.grid(row = 2, column = 1)
+
+fenetre.mainloop()

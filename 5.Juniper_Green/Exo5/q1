@@ -1,0 +1,11 @@
+#compte le nombre de vignettes panini qu'il faudrait acheter pour completer une collection de 700 vignettes
+from random import randint
+
+vignettes = list(range(1, 701))
+achats = 0
+while (vignettes):
+    i_vignette = randint(1, 701)
+    if (i_vignette in vignettes):
+        vignettes.remove(i_vignette)
+    achats += 1
+print(achats)

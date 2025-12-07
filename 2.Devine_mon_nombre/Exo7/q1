@@ -1,0 +1,13 @@
+from random import random
+
+nbPiles = 0
+nbFaces = 0
+for i in range(1000) :
+    if (random() <= 0.5) :
+        nbPiles+= 1
+    else :
+        nbFaces += 1
+  
+print("nombre de piles :",nbPiles)
+print("nombre de faces :",nbFaces)
+print()

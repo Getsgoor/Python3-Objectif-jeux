@@ -1,0 +1,28 @@
+from random import randint
+from time import time
+
+
+nMax = int(input("nombre maximum ? "))
+print()
+nbErreurs = 0
+temps = time()
+
+for i in range(10) :
+    a = randint(1, nMax)
+    b = randint(1,nMax)
+    bonneReponse = False
+    
+    while (not bonneReponse) :
+        reponse = int(input(f"{a} x {b} = "))
+        bonneReponse = reponse == a * b
+        if (not bonneReponse) :
+            print("Faux ! Réessayez !")
+            nbErreurs += 1
+print()
+
+print("chrono: {:2f}".format(time()-temps), "secondes") 
+if (nbErreurs <= 1) :
+    print(nbErreurs, "erreur")
+else :
+    print(nbErreurs, "erreurs")
+      

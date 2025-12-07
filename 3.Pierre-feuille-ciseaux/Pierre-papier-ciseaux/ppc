@@ -1,0 +1,76 @@
+#! /usr/bin/env python3
+# -*- coding:Utf8 -*-
+
+# jeu pierre, papier, ciseaux
+# l'ordinateur joue au hasard
+from random import random
+
+
+def coup(nombre):
+    choix = ["pierre", "papier", "ciseaux"]
+    return choix[int(nombre) - 1]
+
+def afficher_score(choix_joueur, choix_ordi, score_joueur, score_ordi):
+    coup_ordi = coup(choix_ordi)
+    coup_joueur = coup(choix_joueur)
+    print(f"Vous montrez {coup_joueur} - Je montre {coup_ordi}")
+    print(f"vous {score_joueur}	   moi {score_ordi}")
+
+def augmenter_score(coup_joueur, coup_ordi, score_joueur, score_ordi):
+    new_scoreJ = score_joueur
+    new_scoreO = score_ordi
+    if (coup_joueur == coup_ordi):
+        return new_scoreJ, new_scoreO
+    if (coup_joueur == 1 and coup_ordi == 2):
+        new_scoreO += 1
+    elif (coup_joueur == 2 and coup_ordi == 3):
+        new_scoreO += 1
+    elif (coup_joueur == 3 and coup_ordi == 1):
+        new_scoreO += 1
+    else:
+        new_scoreJ +=1
+    
+    return new_scoreJ, new_scoreO
+    
+
+def choisir_coup_ordi():
+     # selon un sondage, un humain joue pierre 41%, papier 30%, ciseaux 29%
+    # donc l'ordinateur va jouer papier 41%, ciseaux 30%, pierre 29%
+    choix = random()
+    if (choix < 0.29):
+        return 1
+    if (choix < 0.59):
+        return 3
+    return 2
+
+def choisir_coup_joueur():
+    choix = 0
+    while True:
+        try:
+            choix = int(input("1 : pierre, 2 : papier, 3 : ciseaux ? "))
+            if (not 1 <= choix <= 3 ):
+                print("Veuillez choisir parmis les propositions suivantes :")
+                continue
+            break
+        except ValueError:
+            print("Veuillez entrer un chiffre correspondant à votre choix")
+    return choix
+
+    
+    
+    
+score_joueur = 0
+score_ordi = 0
+SCORE_CIBLE = 5
+
+
+print("Pierre-papier-ciseaux. Le premier à", SCORE_CIBLE, "a gagné !")
+while (score_joueur < SCORE_CIBLE and score_ordi < SCORE_CIBLE):
+    choix_joueur = choisir_coup_joueur()
+    choix_ordi = choisir_coup_ordi()
+    
+    score_joueur, score_ordi = augmenter_score(choix_joueur, choix_ordi, score_joueur, score_ordi)
+    afficher_score(choix_joueur, choix_ordi, score_joueur, score_ordi)
+    
+print("\nFin du jeu !")
+    

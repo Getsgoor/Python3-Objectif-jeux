@@ -1,0 +1,15 @@
+#frise pierre papier ciseaux
+
+from tkinter import *
+
+
+fenetre = Tk()
+fenetre.title("Pierre, papier, ciseaux")
+
+pierre = PhotoImage(file = "pierre-petit.gif")
+
+for i in range(10) :
+	image = Label(fenetre, image = pierre)
+	image.grid(row = 0, column = i)
+
+fenetre.mainloop()
