@@ -1,0 +1,16 @@
+from random import choice
+
+sujets = "Le chien", "La maîtresse", "Le chat", "Le serpent", "Le facteur", "Camille", "Le coyote", "La coiffeuse", "Le gendarme"
+verbes = "mange", "dessine", "cherche", "admire", "regarde", "nettoie", "caresse", "touche", "avale", "jette", "lâche", "vole"
+adverbes = "lentement", "gaiement", "langoureusement", "rapidement", "avidement", "violemment", "soigneusement", "avec envie"
+complements = "une saucisse", "un ballon", "un chat", "un crayon", "un chapeau", "une vache", "un Rubik's cube", "du chocolat", "un balai", "du lait"
+
+s = ""
+
+
+s += choice(sujets) + " "
+s += choice(verbes) + " "
+s += choice(adverbes) + " "
+s += choice(complements) + " "
+
+print(s)

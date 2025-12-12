@@ -1,0 +1,43 @@
+#cree une carte de loto
+
+from random import randint,sample, choice
+
+num = [list(range(1,10)), list(range(10,20)), list(range(20,30)), 
+         list(range(30,40)),list(range(40,50)),list(range(50,60)),
+         list(range(60,70)),list(range(70,80)),list(range(90,100))]
+
+
+def colonne(num):
+    nb_de_num = [1] * 9
+    carte = []
+    for i in range(6):
+        choix = randint(0,8)
+        while nb_de_num[choix] == 3 or (nb_de_num[choix] == 2 and choix < 8):
+            choix = randint(0,8)
+        nb_de_num[choix] += 1
+    
+    for i in range(9):
+        carte.append(sorted(sample(num[i], nb_de_num[i])))
+    
+    return carte
+
+
+
+def ligne(carte):
+    lignes=[[],[],[]]
+    for i in range(9):
+        for j in range(len(carte[i])):
+            k = min(len(lignes[0]),len(lignes[1]),len(lignes[2]))
+            no_ligne = randint(0,2)
+            long = len(lignes[no_ligne])
+            while long>k or (long>0 and carte[i][j]//10 == lignes[no_ligne][long-1]//10):
+                no_ligne = randint(0,2)  
+                long = len(lignes[no_ligne])
+            lignes[no_ligne].append(carte[i][j])
+    return lignes
+
+
+l = ligne(colonne(num))
+for i in l:
+	print(i)
+
